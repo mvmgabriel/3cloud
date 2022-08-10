@@ -1,0 +1,12 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: fms-config-server
+  cloud:
+    config:
+      server:
+        git:
+          default-label: master
+          searchPaths: /{application}
+          uri: file://C:/3FMeS/CONFIG
