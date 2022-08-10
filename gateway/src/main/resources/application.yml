@@ -1,0 +1,29 @@
+server:
+  port: 9000
+
+eureka:
+  client:
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://eureka-server:8761/eureka/
+ 
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        - id: fms-partacct-api
+          uri: lb://fms-partacct-api
+          predicates:
+            - Path=/fms-partacct-api/**
+            
+        - id: fms-accsync-api
+          uri: lb://fms-accsync-api
+          predicates:
+            - Path=/fms-accsync-api/**
+  zipkin:
+    baseUrl: http://localhost:9411
+  sleuth:
+    sampler:
+      probability: 1.0                

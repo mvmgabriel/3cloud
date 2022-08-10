@@ -1,0 +1,155 @@
+version: '3'
+
+services:
+
+  oracle-scl-db:
+    container_name: oracle-scl-db
+    image: gvenzl/oracle-xe
+    ports:
+      - "1521:1521"
+    volumes:
+      - "/home/focanowork/3FMeS-Cdc-Oracle/ora-db:/opt/oracle/oradata"
+    networks:
+      - cdc
+
+  rabbit-mq:
+    container_name: rabbit-mq
+    image: rabbitmq:3.8.14-management
+    ports: 
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - cdc
+
+  zipkin-mysql:
+    image: openzipkin/zipkin-mysql
+    container_name: zipkin-mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - cdc
+
+  zipkin:
+    container_name: zipkin
+    restart: always
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    environment:
+      STORAGE_TYPE: mysql
+      MYSQL_HOST: zipkin-mysql
+      MYSQL_USER: zipkin
+      MYSQL_PASS: zipkin
+      RABBIT_URI: amqp://guest:guest@rabbit-mq:5672
+    depends_on:
+      - zipkin-mysql
+    networks:
+      - cdc
+
+  zipkin-dependencies:
+    image: openzipkin/zipkin-dependencies
+    container_name: zipkin-dependencies
+    entrypoint: crond -f
+    environment:
+      - STORAGE_TYPE=mysql
+      - MYSQL_HOST=zipkin-mysql
+      # Add the baked-in username and password for the zipkin-mysql image
+      - MYSQL_USER=zipkin
+      - MYSQL_PASS=zipkin
+      # Uncomment to see dependency processing logs
+      # - ZIPKIN_LOG_LEVEL=DEBUG
+      # Uncomment to adjust memory used by the dependencies job
+      # - JAVA_OPTS=-verbose:gc -Xms1G -Xmx1G
+    depends_on:
+      - zipkin-mysql
+
+  eureka-server:
+    container_name: eureka-server
+    build: 
+      context: ./erk-server/
+      dockerfile: Dockerfile
+    image: fms-cdc/erk-server:0.0.1
+    ports:
+      - "8761:8761"
+    networks:
+      - cdc
+
+  gateway-server:
+    container_name: gateway-server
+    build: 
+      context: ./gateway/
+      dockerfile: Dockerfile
+    image: fms-cdc/gateway-server:0.0.1
+    ports:
+      - "9000:9000"
+    environment:
+      RABBIT_URI: amqp://guest:guest@rabbit-mq:5672
+      SPRING_RABBITMQ_HOST: rabbit-mq
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+    networks:
+      - cdc
+
+  fms-partacct-api-1:
+    container_name: fms-partacct-api-1
+    build:
+      context: ./partacct/
+      dockerfile: Dockerfile
+    image: fms-cdc/fms-partacct-api:0.0.1
+    ports:
+      - "8080:8080"
+    environment:
+      RABBIT_URI: amqp://guest:guest@rabbit-mq:5672
+      SPRING_RABBITMQ_HOST: rabbit-mq
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+    networks:
+      - cdc
+  
+  fms-partacct-api-2:
+    container_name: fms-partacct-api-2
+    build:
+      context: ./partacct/
+      dockerfile: Dockerfile
+    image: fms-cdc/fms-partacct-api:0.0.1
+    ports:
+      - "8081:8080"
+    environment:
+      RABBIT_URI: amqp://guest:guest@rabbit-mq:5672
+      SPRING_RABBITMQ_HOST: rabbit-mq
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+    networks:
+      - cdc
+      
+  fms-accsync-api-1:
+    container_name: fms-accsync-api-1
+    build:
+      context: ./accsync/
+      dockerfile: Dockerfile
+    image: fms-cdc/fms-accsync-api:0.0.1
+    ports:
+      - "8082:8080"
+    environment:
+      RABBIT_URI: amqp://guest:guest@rabbit-mq:5672
+      SPRING_RABBITMQ_HOST: rabbit-mq
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+    networks:
+      - cdc
+      
+  fms-accsync-api-2:
+    container_name: fms-accsync-api-2
+    build:
+      context: ./accsync-fail/
+      dockerfile: Dockerfile
+    image: fms-cdc/fms-accsync-fail-api:0.0.1
+    ports:
+      - "8083:8080"
+    environment:
+      RABBIT_URI: amqp://guest:guest@rabbit-mq:5672
+      SPRING_RABBITMQ_HOST: rabbit-mq
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+    networks:
+      - cdc
+      
+networks:
+  cdc:
+    driver: bridge
+   
