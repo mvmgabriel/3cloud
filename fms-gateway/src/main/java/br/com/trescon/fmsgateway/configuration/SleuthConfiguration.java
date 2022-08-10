@@ -1,4 +1,4 @@
-package br.com.trescon.fmes.cdc.gateway;
+package br.com.trescon.fmsgateway.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +9,7 @@ import brave.sampler.Sampler;
 public class SleuthConfiguration {
     
 	@Bean
-	public Sampler defaultSampler() {
+	Sampler defaultSampler() {
 		return Sampler.ALWAYS_SAMPLE;
 	}
     
