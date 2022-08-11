@@ -1,0 +1,9 @@
+docker build -t 3fmes/eureka-server .
+
+./dup.sh -s start -c eureka-server
+
+./dup.sh -s start -c oracle-scl-db
+./dup.sh -s start -c rabbit-mq
+./dup.sh -s start -c zipkin-mysql
+./dup.sh -s start -c zipkin
+

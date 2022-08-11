@@ -53,6 +53,11 @@ then
    then
       docker run -d --network cdc_cdc --name zipkin-dependencies -e STORAGE_TYPE=mysql -e MYSQL_HOST=zipkin-mysql -e MYSQL_USER=zipkin -e MYSQL_PASS=zipkin openzipkin/zipkin-dependencies zipkin-dependencies-entrypoint.sh
    fi
+
+   if [ $parameterC = "eureka-server" ]
+   then
+      docker run -d -p 8761:8761 --network cdc_cdc --name eureka-server 3fmes/eureka-server
+   fi
 fi
 
 if [ $parameterS = "stop" ]
