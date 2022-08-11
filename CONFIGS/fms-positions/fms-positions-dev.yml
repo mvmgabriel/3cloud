@@ -1,0 +1,29 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+resilience4j:
+  retry:
+    instances:
+      default:
+        max-attempts: 3
+      foo-bar:
+        max-attempts: 3
+server:
+  port: ${PORT:0}
+spring:
+  application:
+    name: fms-positions
+  datasource:
+    password: admin
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: fms_scl_db
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
