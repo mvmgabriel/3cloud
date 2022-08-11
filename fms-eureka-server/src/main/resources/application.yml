@@ -5,8 +5,10 @@ eureka:
   server:
     waitTimeInMsWhenSyncEmpty: 1
     enableSelfPreservation: false
+    
 server:
   port: 8761
+  
 spring:
   application:
     name: fms-eureka-server
