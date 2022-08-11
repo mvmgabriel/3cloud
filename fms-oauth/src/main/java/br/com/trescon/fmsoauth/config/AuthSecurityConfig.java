@@ -1,5 +1,7 @@
 package br.com.trescon.fmsoauth.config;
 
+import java.io.InputStream;
+import java.security.KeyStore;
 import java.time.Duration;
 import java.util.Arrays;
 
@@ -7,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,6 +27,11 @@ import org.springframework.security.oauth2.server.authorization.config.ProviderS
 import org.springframework.security.oauth2.server.authorization.config.TokenSettings;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jose.jwk.source.JWKSource;
+import com.nimbusds.jose.proc.SecurityContext;
+
 @EnableWebSecurity
 @Configuration
 public class AuthSecurityConfig {
@@ -38,7 +46,6 @@ public class AuthSecurityConfig {
 	@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE)
 	SecurityFilterChain authFilterChain(HttpSecurity http) throws Exception {
-		OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
 		http.authorizeRequests().anyRequest().authenticated();
 		return http.formLogin(Customizer.withDefaults()).build();
 	}
@@ -65,18 +72,40 @@ public class AuthSecurityConfig {
 		return new InMemoryRegisteredClientRepository(Arrays.asList(awuserClient));
 	}
 	
-	/*
 	@Bean
 	ProviderSettings providerSettings(AuthProperties authProperties) {
 		return ProviderSettings.builder()
-				.issuer(authProperties.getProviderUriString()) //"http://localhost:8080"
+				.issuer(authProperties.getProviderUri()) //"http://localhost:8080" -> porta authserver
 				.build();
 	}
+	
+	@Bean
+	JWKSet jwkSet(AuthProperties authProperties) throws Exception {
+		//Arquivo em uma pasta externa ?
+		final String jksPath = authProperties.getJks().getPath();
+		final InputStream inputStream = new ClassPathResource(jksPath).getInputStream();
+		
+		final KeyStore keyStore = KeyStore.getInstance("JKS"); //TYPE
+		keyStore.load(inputStream, authProperties.getJks().getStorepass().toCharArray());
+		
+		
+		RSAKey rsaKey = RSAKey.load(keyStore,
+				authProperties.getJks().getAlias(),
+				authProperties.getJks().getKeypass().toCharArray());
+		
+		return new JWKSet(rsaKey);
+	}
+	
+	//PODE TER DIVERSAS CHAVES JWK EM UM PROJETO
+	/*
+	JWKSource<SecurityContext> jwtSource(JWKSet jwkSet) {
+		//return (())
+	}
+	*/
 	
 	@Bean
 	JwtEncoder jwtEncoder() {
 		return new NimbusJwtEncoder(null)
 	}
-	*/
 	
 }
