@@ -1,0 +1,20 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+server:
+  port: ${PORT:0}
+spring:
+  application:
+    name: fms-oauth
+    
+aw:
+  auth:
+    providerUri: http://localhost:${PORT:0}
+    jks:
+      keypass: 123456
+      storepass: 123456
+      alias: fms
+      path: keystore/fms.jks
