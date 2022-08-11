@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.trescon.positions.dto.PositionSimpleDto;
 import br.com.trescon.positions.services.PositionService;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 
 @RestController
