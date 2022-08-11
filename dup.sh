@@ -58,6 +58,11 @@ then
    then
       docker run -d -p 8761:8761 --network cdc_cdc --name eureka-server 3fmes/eureka-server
    fi
+
+   if [ $parameterC = "config-server" ]
+   then
+      docker run -d -p 8888:8888 -e GIT3CON_USER=mgabriel -e GIT3CON_PASS=Foc@nowork1 --network cdc_cdc --name config-server 3fmes/config-server
+   fi
 fi
 
 if [ $parameterS = "stop" ]

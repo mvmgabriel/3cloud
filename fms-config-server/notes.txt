@@ -1,0 +1,12 @@
+docker build -t 3fmes/config-server .
+
+./dup.sh -s start -c config-server
+
+./dup.sh -s start -c oracle-scl-db
+./dup.sh -s start -c rabbit-mq
+./dup.sh -s start -c zipkin-mysql
+./dup.sh -s start -c zipkin
+
+
+
+http://localhost:8888/fms-instruments/dev
