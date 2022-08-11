@@ -1,0 +1,8 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /fms-partacct-api
+    
+spring:
+  application:
+    name: fms-partacct-api
