@@ -8,6 +8,6 @@ spring:
     name: fms-instruments
   config:
     import: 
-    - optional:configserver:http://localhost:8888/
+    - optional:configserver:http://config-server:8888/
   profiles:
-    active: dev
+    active: test

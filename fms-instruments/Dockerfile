@@ -1,6 +1,16 @@
-FROM openjdk:17
-LABEL Description="FMS Instruments" Version="0.0.1"
+FROM fmes/openjdk17:latest
+# label for the image
+LABEL Description="Instrument Service API" Version="0.0.1"
+# the version of the archive
 ARG VERSION=0.0.1
-VOLUME /tmp
-ADD ./target/fms-instruments-${VERSION}-SNAPSHOT.jar fms-instruments.jar
-ENTRYPOINT ["java","-jar","/fms-instruments.jar"]
+# mount the temp volume
+WORKDIR /tmp
+# Add the service as app.jar
+ADD target/fms-instruments-${VERSION}-SNAPSHOT.jar app.jar
+ADD entrypoint.sh .
+RUN chmod 755 entrypoint.sh
+# touch the archive for timestamp
+RUN sh -c 'touch /app.jar'
+EXPOSE 8761
+# entrypoint to the image on run
+ENTRYPOINT ["./entrypoint.sh"]

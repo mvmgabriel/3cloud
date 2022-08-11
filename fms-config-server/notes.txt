@@ -9,4 +9,4 @@ docker build -t 3fmes/config-server .
 
 
 
-http://localhost:8888/fms-instruments/dev
+http://localhost:8888/fms-instruments/test
