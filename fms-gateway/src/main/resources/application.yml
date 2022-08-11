@@ -2,7 +2,7 @@ eureka:
   client:
     registerWithEureka: true
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://eureka-server:8761/eureka
 server:
   port: 8765
 spring:
@@ -24,9 +24,14 @@ spring:
           uri: lb://fms-accsync-api
           predicates:
             - Path=/fms-accsync-api/**
+        
+        - id: fms-instruments
+          uri: lb://fms-instruments
+          predicates:
+            - Path=/fms-instruments/**
             
   zipkin:
-    baseUrl: http://localhost:9411
+    baseUrl: http://zipkin:9411
   sleuth:
     sampler:
       probability: 1.0                

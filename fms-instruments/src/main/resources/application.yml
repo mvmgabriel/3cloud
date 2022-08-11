@@ -6,6 +6,11 @@ management:
 spring:
   application:
     name: fms-instruments
+  sleuth:
+    sampler:
+      probability: 1.0
+  zipkin:
+    base-url: http://zipkin:9411
   config:
     import: 
     - optional:configserver:http://config-server:8888/

@@ -63,6 +63,11 @@ then
    then
       docker run -d -p 8888:8888 -e GIT3CON_USER=mgabriel -e GIT3CON_PASS=Foc@nowork1 --network cdc_cdc --name config-server 3fmes/config-server
    fi
+   
+   if [ $parameterC = "gateway" ]
+   then
+      docker run -d -p 8765:8765 --network cdc_cdc --name gateway 3fmes/fms-gateway
+   fi
 
    if [ $parameterC = "instruments" ]
    then
