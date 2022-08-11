@@ -12,7 +12,7 @@ spring:
   datasource:
     password: Manuela
     url: jdbc:oracle:thin:@oracle-scl-db:1521:orcl
-    username: fms_scl_db
+    username: fms_cdc_db
   jpa:
     hibernate:
       ddl-auto: none
