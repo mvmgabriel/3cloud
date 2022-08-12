@@ -13,6 +13,7 @@ spring:
     password: admin
     url: jdbc:oracle:thin:@localhost:1521:xe
     username: fms_scl_db
+    
   jpa:
     hibernate:
       ddl-auto: none
@@ -20,3 +21,4 @@ spring:
       hibernate:
         format_sql: true
     show-sql: true
+    database-platform: org.hibernate.dialect.Oracle12cDialect
