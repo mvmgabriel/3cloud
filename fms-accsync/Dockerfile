@@ -10,7 +10,7 @@ ARG VERSION=0.0.1
 VOLUME /tmp
 
 # Add the service as app.jar
-ADD target/accsync-${VERSION}-SNAPSHOT.jar app.jar
+ADD target/fms-accsync-${VERSION}-SNAPSHOT.jar app.jar
 ADD entrypoint.sh .
 
 # touch the archive for timestamp

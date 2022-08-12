@@ -1,6 +1,6 @@
 spring:
   application:
-    name: fms-partacct-api
+    name: fms-partaccts
   config:
     import: 
     - optional:configserver:http://config-server:8888/
