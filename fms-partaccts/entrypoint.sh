@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 while ! nc -z oracle-scl-db 1521 ; do
     echo "Waiting for upcoming Oracle DB"

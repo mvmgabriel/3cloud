@@ -66,12 +66,19 @@ then
    
    if [ $parameterC = "gateway" ]
    then
-      docker run -d -p 8765:8765 --network cdc_cdc --name gateway 3fmes/fms-gateway
+      docker run -d -p 8765:8765 -e RABBIT_URI=amqp://guest:guest@rabbit-mq:5672 -e SPRING_RABBITMQ_HOST=rabbit-mq -e SPRING_ZIPKIN_SENDER_TYPE=rabbit --network cdc_cdc --name gateway 3fmes/fms-gateway
    fi
 
    if [ $parameterC = "instruments" ]
    then
       docker run -d -p 7001:8080 --network cdc_cdc --name instruments 3fmes/fms-instruments
+   fi
+
+   if [ $parameterC = "partaccts" ]
+   then
+      random=$$
+      nr=$(($(($random%5000))+1))
+      docker run -e RABBIT_URI=amqp://guest:guest@rabbit-mq:5672 -e SPRING_RABBITMQ_HOST=rabbit-mq -e SPRING_ZIPKIN_SENDER_TYPE=rabbit --network cdc_cdc --name partaccts-$nr 3fmes/fms-partaccts
    fi
 
 fi

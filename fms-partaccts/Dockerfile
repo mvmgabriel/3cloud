@@ -1,4 +1,4 @@
-FROM fmes/openjdk11:latest
+FROM fmes/openjdk17:latest
 
 # label for the image
 LABEL Description="Participant / Account Service" Version="0.0.1"
@@ -10,7 +10,7 @@ ARG VERSION=0.0.1
 VOLUME /tmp
 
 # Add the service as app.jar
-ADD target/partacct-${VERSION}-SNAPSHOT.jar app.jar
+ADD target/fms-partaccts-${VERSION}-SNAPSHOT.jar app.jar
 ADD entrypoint.sh .
 
 # touch the archive for timestamp
