@@ -12,12 +12,12 @@ public class UserService {
 	@Autowired
 	private UserRepository repo;
 	
-	public User findById(Integer id) {
+	public User findById(Long id) {
 		return repo.findById(id).get();
 	}
-	
-	public User findByLogin(String login) {
-		return repo.findByLogin(login);
+
+	public User findByEmail(String email) {
+		return repo.findByEmail(email);
 	}
 	
 }

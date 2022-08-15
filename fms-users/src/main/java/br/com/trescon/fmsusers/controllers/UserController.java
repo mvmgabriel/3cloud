@@ -19,14 +19,14 @@ public class UserController {
 	private UserService service;
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<User> findById(@PathVariable Integer id) {
+	public ResponseEntity<User> findById(@PathVariable Long id) {
 		User obj = service.findById(id);
 		return ResponseEntity.ok(obj);
 	}
 	
 	@GetMapping(value = "/search")
-	public ResponseEntity<User> findByLogin(@RequestParam String login) {
-		User obj = service.findByLogin(login);
+	public ResponseEntity<User> findByLogin(@RequestParam String email) {
+		User obj = service.findByEmail(email);
 		return ResponseEntity.ok(obj);
 	}
 	

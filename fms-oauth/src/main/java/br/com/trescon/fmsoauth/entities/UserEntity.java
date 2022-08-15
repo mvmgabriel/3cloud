@@ -1,4 +1,4 @@
-package br.com.trescon.fmsusers.entities;
+package br.com.trescon.fmsoauth.entities;
 
 import java.io.Serializable;
 import java.time.OffsetDateTime;
@@ -15,7 +15,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 @Entity
 @Table(name = "tb_user_teste")
-public class User implements Serializable {
+public class UserEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -31,6 +31,7 @@ public class User implements Serializable {
 
 	@Enumerated(EnumType.STRING)
 	private Type type;
+	
 	@CreatedDate
 	private OffsetDateTime createdAt;
 

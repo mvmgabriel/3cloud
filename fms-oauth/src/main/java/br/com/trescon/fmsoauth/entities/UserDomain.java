@@ -1,39 +1,17 @@
-package br.com.trescon.fmsusers.entities;
+package br.com.trescon.fmsoauth.entities;
 
 import java.io.Serializable;
-import java.time.OffsetDateTime;
+import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import org.springframework.data.annotation.CreatedDate;
-
-@Entity
-@Table(name = "tb_user_teste")
-public class User implements Serializable {
+public class UserDomain implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue
 	private Long id;
-
 	private String name;
-
-	@Column(unique = true)
 	private String email;
-
 	private String password;
-
-	@Enumerated(EnumType.STRING)
 	private Type type;
-	@CreatedDate
-	private OffsetDateTime createdAt;
-
+	private Date createdAt;
 
 	public Long getId() {
 		return id;
@@ -75,16 +53,15 @@ public class User implements Serializable {
 		this.type = type;
 	}
 
-	public OffsetDateTime getCreatedAt() {
+	public Date getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(OffsetDateTime createdAt) {
+	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
 
 	public enum Type {
 		ADMIN, CLIENT;
 	}
-
 }

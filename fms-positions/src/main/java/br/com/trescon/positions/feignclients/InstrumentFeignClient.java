@@ -6,11 +6,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import br.com.trescon.positions.config.OAuthFeignConfig;
 import br.com.trescon.positions.entities.Instrument;
 
 
 @Component
-@FeignClient(name = "fms-instruments", path = "/instruments")
+@FeignClient(name = "fms-instruments", path = "/instruments", configuration = OAuthFeignConfig.class)
 public interface InstrumentFeignClient {
 	
 	@GetMapping(value = "/{id}")
