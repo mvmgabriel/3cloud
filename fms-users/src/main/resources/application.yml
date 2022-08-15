@@ -6,9 +6,10 @@ management:
         
 spring:
   application:
-    name: fms-positions
+    name: fms-users
   config:
     import: 
     - optional:configserver:http://localhost:8888/
   profiles:
     active: test
+

@@ -88,6 +88,20 @@ then
       docker run -d -e RABBIT_URI=amqp://guest:guest@rabbit-mq:5672 -e SPRING_RABBITMQ_HOST=rabbit-mq -e SPRING_ZIPKIN_SENDER_TYPE=rabbit --network cdc_cdc --name accsync-$nr 3fmes/fms-accsync
    fi
 
+   if [ $parameterC = "positions" ]
+   then
+      random=$$
+      nr=$(($(($random%5000))+1))
+      docker run -d -e RABBIT_URI=amqp://guest:guest@rabbit-mq:5672 -e SPRING_RABBITMQ_HOST=rabbit-mq -e SPRING_ZIPKIN_SENDER_TYPE=rabbit --network cdc_cdc --name positions-$nr 3fmes/fms-positions
+   fi
+
+   if [ $parameterC = "users" ]
+   then
+      random=$$
+      nr=$(($(($random%5000))+1))
+      docker run -d -e RABBIT_URI=amqp://guest:guest@rabbit-mq:5672 -e SPRING_RABBITMQ_HOST=rabbit-mq -e SPRING_ZIPKIN_SENDER_TYPE=rabbit --network cdc_cdc --name users-$nr 3fmes/fms-users
+   fi
+
 fi
 
 if [ $parameterS = "stop" ]
