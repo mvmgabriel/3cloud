@@ -15,4 +15,4 @@ while ! nc -z rabbit-mq 15672 ; do
     sleep 10
 done
 
-java -Djava.security.egd=file:/dev/./urandom -jar /app.jar
+java -Djava.security.egd=file:/dev/./urandom -jar /opt/soft/app.jar

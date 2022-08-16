@@ -1,5 +1,6 @@
 package br.com.trescon.fmes.partacct.controller;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.trescon.fmes.partacct.log.LogFormat;
 import br.com.trescon.fmes.partacct.feign.SyncRestClientService;
 import brave.Tracer;
 
@@ -47,9 +49,12 @@ public class ParticipantRestService {
         	
         	syncRestClientService.listParticipantByBVMFCodeRole(bvmfcode, roleId);
         	tracer.currentSpan().tag("app.text.info.2", "syncRestClientService after");
-        	   	
-        	//LOGGER.info(text);
-			return ResponseEntity.ok().body(text);
+    
+        	LOGGER.info(LogFormat.print(text,
+        			tracer.currentSpan().context().traceIdString(),
+        			tracer.currentSpan().context().spanIdString()));
+			
+        	return ResponseEntity.ok().body(text);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.badRequest().build();

@@ -78,7 +78,7 @@ then
    then
       random=$$
       nr=$(($(($random%5000))+1))
-      docker run -d -e RABBIT_URI=amqp://guest:guest@rabbit-mq:5672 -e SPRING_RABBITMQ_HOST=rabbit-mq -e SPRING_ZIPKIN_SENDER_TYPE=rabbit --network cdc_cdc --name partaccts-$nr 3fmes/fms-partaccts
+      docker run -d -v /home/focanowork/volumes/log/partaccts:/opt/log -e CONTAINER_NAME=partaccts-$nr -e RABBIT_URI=amqp://guest:guest@rabbit-mq:5672 -e SPRING_RABBITMQ_HOST=rabbit-mq -e SPRING_ZIPKIN_SENDER_TYPE=rabbit --network cdc_cdc --name partaccts-$nr 3fmes/fms-partaccts
    fi
 
    if [ $parameterC = "accsync" ]
