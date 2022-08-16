@@ -21,8 +21,11 @@ spring:
       hibernate:
         format_sql: true
     show-sql: true
-
-aw:
+  session:
+    store-type: jdbc
+    
+    
+fms-server:
   auth:
     providerUri: http://localhost:8082
     jks:
