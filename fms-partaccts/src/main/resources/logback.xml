@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <property name="LOGS" value="/opt/log" />
+    <!-- <property name="LOGS" value="/opt/log" /> -->
+    <property name="LOGS" value="C:/WslShared/volumes/log/partaccts" />
 
     <appender name="Console"
         class="ch.qos.logback.core.ConsoleAppender">
