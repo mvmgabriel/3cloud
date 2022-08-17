@@ -1,0 +1,16 @@
+eureka:
+  registerWithEureka: true
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+    
+spring:
+  application:
+    name: fms-gateway
+  
+  sleuth:
+    sampler:
+      probability: 1.0
+  
+  zipkin:
+    base-url: http://zipkin:9411
