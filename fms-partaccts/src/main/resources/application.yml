@@ -1,5 +1,9 @@
 spring:
   application:
     name: fms-partaccts
+  config:
+    import: 
+    - optional:configserver:http://localhost:8888/
+  
   profiles:
     active: prod
