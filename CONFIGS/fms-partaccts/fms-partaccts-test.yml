@@ -12,6 +12,10 @@ spring:
   application:
     name: fms-partaccts
   
+  config:
+    import: 
+    - optional:configserver:http://config-server:8888/
+  
   datasource:
     password: Manuela
     url: jdbc:oracle:thin:@oracle-scl-db:1521:xe

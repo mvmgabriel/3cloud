@@ -6,8 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(url = "http://gateway:8765", path = "/fms-accsync/services/syncService",
-	name = "fms-accsync")
+@FeignClient(path = "/fms-accsync/services/syncService", name = "fms-accsync")
 public interface SyncRestClientService {
 
 	@GetMapping(value = "/getParticipant/{bvmfcode}/{roleId}", 
