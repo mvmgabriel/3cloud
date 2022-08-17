@@ -3,7 +3,7 @@ spring:
     name: fms-partaccts
   config:
     import: 
-    - optional:configserver:http://config-server:8888/
+    - optional:configserver:http://localhost:8888/
   
   profiles:
-    active: test
+    active: prod
