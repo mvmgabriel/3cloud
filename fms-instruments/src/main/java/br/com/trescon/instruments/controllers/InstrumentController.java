@@ -3,6 +3,7 @@ package br.com.trescon.instruments.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,9 @@ public class InstrumentController {
 	
 	@Autowired
 	private Environment env;
-
+	
+	
+	//@PreAuthorize("hasRole('ROLE_TESTE')")
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Instrument> findById(@PathVariable("id") Long id) {
 		String port = env.getProperty("local.server.port");
