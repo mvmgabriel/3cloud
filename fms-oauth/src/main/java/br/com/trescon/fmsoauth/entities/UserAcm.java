@@ -3,41 +3,62 @@ package br.com.trescon.fmsoauth.entities;
 import java.io.Serializable;
 import java.util.Date;
 
-public class User implements Serializable {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "tb_user")
+public class UserAcm implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
 	private Integer id;
+	
+	@Column(name = "FIRSTNAME", nullable = false, length = 45)
 	private String firstName;
+	
+	@Column(name = "SURNAME")
 	private String surname;
+	
+	@Column(name = "NICKNAME")
 	private String nickName;
+	
+	@Column(name = "LOGIN")
 	private String login;
+	
+	@Column(name = "PASSWORD")
 	private String password;
-	private int status;
+	
+	@Column(name = "STATUS")
+	private Integer status;
+	
+	@Column(name = "LASTACCESS")
 	private Date lastAccess;
+	
+	@Column(name = "LASTPASSWORDCHANGE")
 	private Date lastPasswordChange;
+	
+	@Column(name = "EMAIL")
 	private String email;
-	private long loginattempt;
+	
+	@Column(name = "LOGINATTEMPT")
+	private Long loginattempt;
+	
+	@Column(name = "ACCTNUMBER")
 	private String acctNumber;
+	
+	@Column(name = "ADVISORID")
 	private String advisorId;
-
+	
 	//private Set<TbPasswordHistoric> tbPasswordHistorics = new HashSet<TbPasswordHistoric>(0);
-
-	//MANY TO MANY
-	//JOINTABLE
-	/*
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name= "tb_user_role",
-			joinColumns = @JoinColumn(name="user_id"),
-			inverseJoinColumns = @JoinColumn(name="role_id")
-	)
-	private Set<String> roles = new HashSet<>();
-	*/
-	//private Set<Role> role;
 	//private Set<TbUserRole> tbUserRoles = new HashSet<TbUserRole>(0);
-	
-	public User() {
-	}
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -86,11 +107,11 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public int getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
@@ -118,11 +139,11 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	public long getLoginattempt() {
+	public Long getLoginattempt() {
 		return loginattempt;
 	}
 
-	public void setLoginattempt(long loginattempt) {
+	public void setLoginattempt(Long loginattempt) {
 		this.loginattempt = loginattempt;
 	}
 

@@ -11,4 +11,23 @@ spring:
     import: 
     - optional:configserver:http://config-server:8888/
   profiles:
-    active: test
+    active: dev
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8082 #aqui é o endereço do auth-server
+      client:
+        registration:
+          fms: #apelido para esse cliente no caso fms-instruments ou fms-intruments-ms
+            provider: fms # qualquer nome do provider
+            client-id: fms #id que está configurado no auth server
+            client-secret: 123456 #senha que está configurado lá no auth server
+            authorization-grant-type: client_credentials #tipo de authorization na configuração do authserver
+            scope: users:read,users:write #exemplos de scopos
+            client-name: fms-instruments #apelido para esse cliente no caso fms-instruments ou fms-intruments-ms
+        provider:
+          # aqui tem que ter o mesmo nome do provider da configuração acima, no caso auth-server, mas poderia se qualquer coisa
+          fms: 
+            issuer-uri: http://localhost:8082 #aqui é o endereço do auth-server 
+            

@@ -21,8 +21,16 @@ public class PositionService {
 	
 	public PositionSimpleDto findById(String securitiesFinancingTradeId, Integer side) {
 		Position position = repo.findById(new PositionId(securitiesFinancingTradeId, side)).get();
-		Instrument instrument = instrumentFeignClient.findById(position.getInstrumentId()).getBody();
-		return new PositionSimpleDto(position, instrument);
+
+		try {
+			Instrument instrument = instrumentFeignClient.findById(position.getInstrumentId()).getBody();
+			return new PositionSimpleDto(position, instrument);
+		} catch (Exception e) {
+			System.out.println("Erro para buscar instrument");
+			return new PositionSimpleDto(position, new Instrument());
+		}
+		
+		
 	}
 	
 	public PositionSimpleDto findByIdError(String securitiesFinancingTradeId, Integer side) {

@@ -8,7 +8,7 @@ spring:
       server:
         git:
           default-label: master
-          searchPaths: CONFIGS/{application}
           uri: http://git.trescon.com.br:3000/FMS/arquitetura.poc.ja
+          searchPaths: CONFIGS/{application}
           username: ${GIT3CON_USER}
           password: ${GIT3CON_PASS}

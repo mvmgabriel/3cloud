@@ -9,7 +9,7 @@ import org.springframework.validation.annotation.Validated;
 
 @Component
 @Validated
-@ConfigurationProperties("aw.auth")
+@ConfigurationProperties("fms-server.auth")
 public class AuthProperties {
 
 	@NotBlank
