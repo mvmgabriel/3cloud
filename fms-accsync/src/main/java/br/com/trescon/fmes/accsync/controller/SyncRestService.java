@@ -41,7 +41,7 @@ public class SyncRestService {
         	String hostname = System.getenv("HOSTNAME");
         	String text = "sync ==>>> bvmfcode: "+ bvmfcode +", roleId: "+ roleId +" ("+hostname+")";
         	
-        	if(System.currentTimeMillis()/4 == 0)
+        	if(System.currentTimeMillis()%4 == 0)
         		throw new Exception("Erro forçado para testes do zipkin...");
         	
         	//LOGGER.info(text);

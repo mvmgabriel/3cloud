@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 while ! nc -z eureka-server 8761 ; do
     echo "Waiting for upcoming Eureka Server"

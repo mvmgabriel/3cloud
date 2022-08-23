@@ -1,10 +1,6 @@
-eureka:
-  client:
-    registerWithEureka: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka
 server:
   port: 8765
+  
 spring:
   application:
     name: fms-gateway
@@ -15,18 +11,24 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
-        - id: fms-partacct-api
-          uri: lb://fms-partacct-api
+        - id: fms-partaccts
+          uri: lb://fms-partaccts
           predicates:
-            - Path=/fms-partacct-api/**
+            - Path=/fms-partaccts/**
             
-        - id: fms-accsync-api
-          uri: lb://fms-accsync-api
+        - id: fms-accsync
+          uri: lb://fms-accsync
           predicates:
-            - Path=/fms-accsync-api/**
-            
-  zipkin:
-    baseUrl: http://localhost:9411
-  sleuth:
-    sampler:
-      probability: 1.0                
+            - Path=/fms-accsync/**
+        
+        - id: fms-instruments
+          uri: lb://fms-instruments
+          predicates:
+            - Path=/fms-instruments/**
+
+  config:
+    import: 
+    - optional:configserver:http://localhost:8888/
+  
+  profiles:
+    active: prod

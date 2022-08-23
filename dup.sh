@@ -53,6 +53,55 @@ then
    then
       docker run -d --network cdc_cdc --name zipkin-dependencies -e STORAGE_TYPE=mysql -e MYSQL_HOST=zipkin-mysql -e MYSQL_USER=zipkin -e MYSQL_PASS=zipkin openzipkin/zipkin-dependencies zipkin-dependencies-entrypoint.sh
    fi
+
+   if [ $parameterC = "eureka-server" ]
+   then
+      docker run -d -p 8761:8761 --network cdc_cdc --name eureka-server 3fmes/eureka-server
+   fi
+
+   if [ $parameterC = "config-server" ]
+   then
+      docker run -d -p 8888:8888 -e GIT3CON_USER=mgabriel -e GIT3CON_PASS=Foc@nowork1 --network cdc_cdc --name config-server 3fmes/config-server
+   fi
+   
+   if [ $parameterC = "gateway" ]
+   then
+      docker run -d -p 8765:8765 -e RABBIT_URI=amqp://guest:guest@rabbit-mq:5672 -e SPRING_RABBITMQ_HOST=rabbit-mq -e SPRING_ZIPKIN_SENDER_TYPE=rabbit --network cdc_cdc --name gateway 3fmes/fms-gateway
+   fi
+
+   if [ $parameterC = "instruments" ]
+   then
+      docker run -d -p 7001:8080 --network cdc_cdc --name instruments 3fmes/fms-instruments
+   fi
+
+   if [ $parameterC = "partaccts" ]
+   then
+      random=$$
+      nr=$(($(($random%5000))+1))
+      docker run -d -v /home/focanowork/volumes/log/partaccts:/opt/log -e LOG_HOME=/opt/log -e LOG_LEVEL=info -e RABBIT_URI=amqp://guest:guest@rabbit-mq:5672 -e SPRING_RABBITMQ_HOST=rabbit-mq -e SPRING_ZIPKIN_SENDER_TYPE=rabbit --network cdc_cdc --name partaccts-$nr 3fmes/fms-partaccts
+   fi
+
+   if [ $parameterC = "accsync" ]
+   then
+      random=$$
+      nr=$(($(($random%5000))+1))
+      docker run -d -e RABBIT_URI=amqp://guest:guest@rabbit-mq:5672 -e SPRING_RABBITMQ_HOST=rabbit-mq -e SPRING_ZIPKIN_SENDER_TYPE=rabbit --network cdc_cdc --name accsync-$nr 3fmes/fms-accsync
+   fi
+
+   if [ $parameterC = "positions" ]
+   then
+      random=$$
+      nr=$(($(($random%5000))+1))
+      docker run -d -e RABBIT_URI=amqp://guest:guest@rabbit-mq:5672 -e SPRING_RABBITMQ_HOST=rabbit-mq -e SPRING_ZIPKIN_SENDER_TYPE=rabbit --network cdc_cdc --name positions-$nr 3fmes/fms-positions
+   fi
+
+   if [ $parameterC = "users" ]
+   then
+      random=$$
+      nr=$(($(($random%5000))+1))
+      docker run -d -e RABBIT_URI=amqp://guest:guest@rabbit-mq:5672 -e SPRING_RABBITMQ_HOST=rabbit-mq -e SPRING_ZIPKIN_SENDER_TYPE=rabbit --network cdc_cdc --name users-$nr 3fmes/fms-users
+   fi
+
 fi
 
 if [ $parameterS = "stop" ]
