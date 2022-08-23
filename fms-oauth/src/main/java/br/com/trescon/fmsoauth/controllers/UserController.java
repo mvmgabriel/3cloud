@@ -10,11 +10,16 @@ import br.com.trescon.fmsoauth.entities.UserDomain;
 import br.com.trescon.fmsoauth.services.UserService;
 
 @RestController
-@RequestMapping(value = "/usersTeste")
+@RequestMapping(value = "/users")
 public class UserController {
 	
 	@Autowired
 	private UserService service;
+	
+	@GetMapping(value = "/teste")
+	public ResponseEntity<String> findUserByEmail(String login) {
+		return ResponseEntity.ok("TESTE AUTH");
+	}
 	
 	/*
 	@GetMapping(value = "/search")

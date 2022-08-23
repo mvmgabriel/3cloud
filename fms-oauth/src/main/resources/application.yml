@@ -11,8 +11,11 @@ spring:
   application:
     name: fms-oauth
   datasource:
-    url: jdbc:postgresql://localhost:5432/fms-db
-    username: postgres
+    #url: jdbc:postgresql://localhost:5432/fms-db
+    #username: postgres
+    #password: admin
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: fms_acm_db
     password: admin
   jpa:
     hibernate:
@@ -24,10 +27,13 @@ spring:
   session:
     store-type: jdbc
     
+jwt:
+  expiration: 43200000
     
 fms-server:
   auth:
     providerUri: http://localhost:8082
+    #providerUri: http://localhost:8765/fms-oauth
     jks:
       keypass: 123456
       storepass: 123456

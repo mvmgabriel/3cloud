@@ -13,13 +13,13 @@ import javax.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
 
-@Entity
-@Table(name = "tb_user_teste")
+//@Entity
+//@Table(name = "tb_user_teste")
 public class UserEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue
+	//@Id
+	//@GeneratedValue
 	private Long id;
 
 	private String name;

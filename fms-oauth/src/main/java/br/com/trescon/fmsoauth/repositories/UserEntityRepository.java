@@ -5,8 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import br.com.trescon.fmsoauth.entities.UserEntity;
 
-@Repository
-public interface UserEntityRepository extends JpaRepository<UserEntity, Long>{
+//@Repository
+public interface UserEntityRepository {
 
 	public UserEntity findByEmail(String email);
 }

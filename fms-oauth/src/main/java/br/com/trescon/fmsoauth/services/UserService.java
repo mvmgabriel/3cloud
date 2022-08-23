@@ -10,9 +10,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import br.com.trescon.fmsoauth.entities.UserAcm;
 import br.com.trescon.fmsoauth.entities.UserDomain;
 import br.com.trescon.fmsoauth.entities.UserEntity;
 import br.com.trescon.fmsoauth.feignclients.UserFeignClient;
+import br.com.trescon.fmsoauth.repositories.UserAcmRepository;
 import br.com.trescon.fmsoauth.repositories.UserEntityRepository;
 
 @Service
@@ -22,8 +24,32 @@ public class UserService implements UserDetailsService {
 	private UserFeignClient userFeignClient;
 	
 	@Autowired
-	private UserEntityRepository repo;
+	//private UserEntityRepository repo;
+	private UserAcmRepository userAcmRepository;
 	
+	@Override
+	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+		System.out.println("LoadByUsername Testando");
+		
+		UserAcm user = userAcmRepository.findByLogin(login).orElseThrow(() -> new UsernameNotFoundException(login));
+		
+		System.out.println(user.getLogin());
+		System.out.println(user.getPassword());
+		//SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("ROLE_" + user.getType().name());
+		SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("ROLE_ADMIN");
+		return new User(
+				user.getLogin(),
+				user.getPassword(),
+				List.of(simpleGrantedAuthority)
+				);
+	}
+	
+	public UserAcm findUserByLogin(String login) throws Exception {
+		UserAcm user = userAcmRepository.findByLogin(login).orElseThrow(() -> new UsernameNotFoundException(login));
+		return user;
+	}
+	
+	/*
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		UserEntity user = repo.findByEmail(email);
@@ -47,6 +73,8 @@ public class UserService implements UserDetailsService {
 		}
 		return user;
 	}
+	
+	*/
 
 	/*
 	@Override

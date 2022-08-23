@@ -58,34 +58,5 @@ public class InstrumentSecurityConfig {
 
         return converter;
     }
-
-    /*
-    //SALVA TOKEN EM MEMÓRIA
-    @Bean
-    OAuth2AuthorizedClientService auth2AuthorizedClientService(ClientRegistrationRepository clientRegistrationRepository) {
-        return new InMemoryOAuth2AuthorizedClientService(clientRegistrationRepository);
-    }
-
-    //gerencia o token
-    @Bean
-    AuthorizedClientServiceOAuth2AuthorizedClientManager clientManager(
-            ClientRegistrationRepository clientRegistrationRepository,
-            OAuth2AuthorizedClientService auth2AuthorizedClientService
-    ) {
-        var authorizedClientProvider =
-                OAuth2AuthorizedClientProviderBuilder
-                .builder()
-                .clientCredentials()
-                .build();
-
-        var clientManager = new AuthorizedClientServiceOAuth2AuthorizedClientManager(
-                clientRegistrationRepository,
-                auth2AuthorizedClientService
-        );
-
-        clientManager.setAuthorizedClientProvider(authorizedClientProvider);
-
-        return clientManager;
-    }
-    */
+    
 }
