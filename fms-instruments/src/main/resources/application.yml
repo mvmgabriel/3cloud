@@ -17,5 +17,9 @@ spring:
         jwt:
           issuer-uri: http://localhost:8082
           #get public key
-          # jwk-set-uri: http://localhost:8082/oauth2/jwks    
-          
+          # jwk-set-uri: http://localhost:8082/oauth2/jwks
+  cache:
+    type: redis
+  redis:
+    host: localhost
+    port: 6379      
