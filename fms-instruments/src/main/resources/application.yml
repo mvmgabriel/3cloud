@@ -15,7 +15,9 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8082
+          issuer-uri: http://localhost:8765/fms-oauth
+          #jwk-set-uri: http://localhost:8765/oauth2/jwks
+          #issuer-uri: http://localhost:8082
           #get public key
           # jwk-set-uri: http://localhost:8082/oauth2/jwks
   cache:

@@ -1,9 +1,7 @@
 package br.com.trescon.fmsoauth.security;
 
-import java.security.Key;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
 import java.security.UnrecoverableKeyException;
 import java.util.Date;
 import java.util.HashSet;
@@ -24,6 +22,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 
+import br.com.trescon.fmsoauth.config.AuthProperties;
 import br.com.trescon.fmsoauth.entities.UserAcm;
 
 @Component
@@ -35,6 +34,9 @@ public class JWTUtil {
 	@Autowired
 	private JWKSet jwkSet;
 	
+	@Autowired
+	private AuthProperties authProperties;
+	
 	private final static String KEY_ID = "fms"; // trocar para variavel config
 
     public JWTUtil() {
@@ -44,6 +46,8 @@ public class JWTUtil {
 		JWK jwk = jwkSet.getKeyByKeyId("fms");
 		RSAKey keyRSA = (RSAKey) jwk;
 		
+		
+		//TESTE
 		Set<String> authorities = new HashSet<String>();
 		authorities.add("ADMIN");
 		authorities.add("USER");
@@ -54,7 +58,7 @@ public class JWTUtil {
 				.claim("user_id", user.getId())
 				.claim("user_name", user.getFirstName())
 				.claim("authorities", authorities)
-				.issuer("http://localhost:8082")
+				.issuer(authProperties.getProviderUri())
 				.expirationTime(new Date(System.currentTimeMillis() + expiration))
 			    .build();
 		
