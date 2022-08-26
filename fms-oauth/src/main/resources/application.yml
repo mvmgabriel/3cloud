@@ -5,8 +5,8 @@ eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 server:
-  #port: ${PORT:0}
-  port: 8082
+  port: ${PORT:0}
+  #port: 8082
 spring:
   application:
     name: fms-oauth
@@ -32,8 +32,8 @@ jwt:
     
 fms-server:
   auth:
-    providerUri: http://localhost:8082
-    #providerUri: http://localhost:8765/fms-oauth
+    #providerUri: http://localhost:8082
+    providerUri: http://localhost:8765/fms-oauth
     jks:
       keypass: 123456
       storepass: 123456
